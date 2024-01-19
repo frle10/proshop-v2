@@ -65,7 +65,7 @@ const OrderScreen = () => {
         await payOrder({
           orderId,
           details,
-        });
+        }).unwrap();
 
         refetch();
         toast.success('Payment successful');
@@ -121,7 +121,9 @@ const OrderScreen = () => {
   if (isLoading) {
     return <Loader />;
   } else if (error) {
-    return <Message variant='danger'>{error}</Message>;
+    return (
+      <Message variant='danger'>{error?.data?.message || error.error}</Message>
+    );
   }
 
   return (
